@@ -1,0 +1,3 @@
+[submodule "somafm"]
+	path = somafm
+	url = git@github.com:dan-b/somafm.git
