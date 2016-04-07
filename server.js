@@ -9,22 +9,27 @@ var path = require('path');
 var async = require('async');
 var socketio = require('socket.io');
 var express = require('express');
-
+var somafm = require('./routes/somafm');
 //
 // ## SimpleServer `SimpleServer(obj)`
 //
 // Creates a new instance of SimpleServer with the following options:
 //  * `port` - The HTTP port to listen on. If `process.env.PORT` is set, _it overrides this value_.
 //
-var router = express();
-var server = http.createServer(router);
-var io = socketio.listen(server);
+//var router = express();
+var app = express();
+var server = http.createServer(app);
+//var io = socketio.listen(server);
 
-router.use(express.static(path.resolve(__dirname, 'client')));
+app.use(express.static(path.resolve(__dirname, 'somafm/www')));
+app.use('/somafm', somafm);
+app.get('/about', function (req, res) {
+    res.send('about');
+});
 var messages = [];
 var sockets = [];
 
-io.on('connection', function (socket) {
+/*io.on('connection', function (socket) {
     messages.forEach(function (data) {
       socket.emit('message', data);
     });
@@ -58,9 +63,9 @@ io.on('connection', function (socket) {
         updateRoster();
       });
     });
-  });
+  });*/
 
-function updateRoster() {
+/*function updateRoster() {
   async.map(
     sockets,
     function (socket, callback) {
@@ -76,7 +81,7 @@ function broadcast(event, data) {
   sockets.forEach(function (socket) {
     socket.emit(event, data);
   });
-}
+}*/
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   var addr = server.address();
