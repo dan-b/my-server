@@ -21,7 +21,7 @@ var app = express();
 var server = http.createServer(app);
 //var io = socketio.listen(server);
 
-app.use(express.static(path.resolve(__dirname, 'somafm/www')));
+app.use(express.static(path.resolve(__dirname, 'public/somafm')));
 app.use('/somafm', somafm);
 app.get('/about', function (req, res) {
     res.send('about');
